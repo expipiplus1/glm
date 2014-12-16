@@ -62,6 +62,18 @@ namespace glm
 		vecType const & x, 
 		vecType const & Normal);
 
+	//! Create a vector perpendicular to Normal.
+	//! From GLM_GTX_perpendicular extension.
+	template <typename T>
+	GLM_FUNC_DECL tvec3<T> perp(
+		tvec3<T> const & Normal);
+
+	//! Create a vector of zeros with a one in the axis where x has the least magnitude.
+	//! From GLM_GTX_perpendicular extension.
+	template <typename T>
+	GLM_FUNC_DECL tvec3<T> leastMagnitudeAxis(
+        tvec3<T> const & x);
+
 	/// @}
 }//namespace glm
 

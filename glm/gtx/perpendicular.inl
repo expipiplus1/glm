@@ -41,4 +41,30 @@ namespace glm
 	{
 		return x - proj(x, Normal);
 	}
+
+    template <typename T>
+    GLM_FUNC_DECL tvec3<T> perp
+    (
+        tvec3<T> const & Normal
+    )
+    {
+        tvec3<T> const x = leastMagnitudeAxis(Normal);
+        return cross(Normal, x);
+    }
+
+    template <typename T>
+    GLM_FUNC_DECL tvec3<T> leastMagnitudeAxis
+    (
+        tvec3<T> const & x
+    )
+    {
+        tvec3<T> const axes[3] = { tvec3<T>(1,0,0),
+                                   tvec3<T>(0,1,0),
+                                   tvec3<T>(0,0,1) };
+        tvec3<T> const abs_x = abs(x);
+        u32 const i = abs_x.x < abs_x.y ? (abs_x.x < abs_x.z ? 0 : 2)
+                                        : (abs_x.y < abs_x.z ? 1 : 2);
+        return axes[i];
+    }
+
 }//namespace glm
