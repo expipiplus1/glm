@@ -50,6 +50,16 @@ namespace glm
 	}
 
 	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tmat4x4<T, P> rotateSinCos(
+		T const sine,
+		T const cosine,
+		tvec3<T, P> const & v)
+	{
+		return rotateSinCos(
+			tmat4x4<T, P>(1), sine, cosine, v);
+	}
+
+	template <typename T, precision P>
 	GLM_FUNC_QUALIFIER tmat4x4<T, P> scale(
 		tvec3<T, P> const & v)
 	{
