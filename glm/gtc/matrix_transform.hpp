@@ -103,6 +103,23 @@ namespace glm
 		T angle,
 		tvec3<T, P> const & axis);
 
+	/// Builds a rotation 4 * 4 matrix created from an axis vector and an angle given as a sine/cosine pair
+	///
+	/// @param m Input matrix multiplied by this rotation matrix.
+	/// @param sine the sine of the angle to rotate by
+	/// @param cosine the sine of the angle to rotate by
+	/// @param axis Rotation axis, recommanded to be normalized.
+	/// @tparam T Value type used to build the matrix. Supported: half, float or double.
+	/// @see gtc_matrix_transform
+	/// @see - rotate(tmat4x4<T, P> const & m, T angle, T x, T y, T z)
+	/// @see - rotateSinCos(T const sine, T const cosine, tvec3<T, P> const & v)
+	template <typename T, precision P>
+	GLM_FUNC_DECL tmat4x4<T, P> rotateSinCos(
+		tmat4x4<T, P> const & m,
+		T sine,
+		T cosine,
+		tvec3<T, P> const & axis);
+
 	/// Builds a scale 4 * 4 matrix created from 3 scalars. 
 	/// 
 	/// @param m Input matrix multiplied by this scale matrix.

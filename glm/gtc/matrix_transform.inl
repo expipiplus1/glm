@@ -60,28 +60,7 @@ namespace glm
 		T const c = cos(a);
 		T const s = sin(a);
 
-		tvec3<T, P> axis(normalize(v));
-		tvec3<T, P> temp((T(1) - c) * axis);
-
-		tmat4x4<T, P> Rotate(uninitialize);
-		Rotate[0][0] = c + temp[0] * axis[0];
-		Rotate[0][1] = 0 + temp[0] * axis[1] + s * axis[2];
-		Rotate[0][2] = 0 + temp[0] * axis[2] - s * axis[1];
-
-		Rotate[1][0] = 0 + temp[1] * axis[0] - s * axis[2];
-		Rotate[1][1] = c + temp[1] * axis[1];
-		Rotate[1][2] = 0 + temp[1] * axis[2] + s * axis[0];
-
-		Rotate[2][0] = 0 + temp[2] * axis[0] + s * axis[1];
-		Rotate[2][1] = 0 + temp[2] * axis[1] - s * axis[0];
-		Rotate[2][2] = c + temp[2] * axis[2];
-
-		tmat4x4<T, P> Result(uninitialize);
-		Result[0] = m[0] * Rotate[0][0] + m[1] * Rotate[0][1] + m[2] * Rotate[0][2];
-		Result[1] = m[0] * Rotate[1][0] + m[1] * Rotate[1][1] + m[2] * Rotate[1][2];
-		Result[2] = m[0] * Rotate[2][0] + m[1] * Rotate[2][1] + m[2] * Rotate[2][2];
-		Result[3] = m[3];
-		return Result;
+		return rotateSinCos(m, s, c, v);
 	}
 		
 	template <typename T, precision P>
@@ -116,6 +95,42 @@ namespace glm
 
 		Result[3] = tvec4<T, P>(0, 0, 0, 1);
 		return m * Result;
+	}
+
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tmat4x4<T, P> rotateSinCos
+	(
+		tmat4x4<T, P> const & m,
+		T const sine,
+		T const cosine,
+		tvec3<T, P> const & v
+	)
+	{
+		T const c = cosine;
+		T const s = sine;
+
+		tvec3<T, P> axis(normalize(v));
+		tvec3<T, P> temp((T(1) - c) * axis);
+
+		tmat4x4<T, P> Rotate(uninitialize);
+		Rotate[0][0] = c + temp[0] * axis[0];
+		Rotate[0][1] = 0 + temp[0] * axis[1] + s * axis[2];
+		Rotate[0][2] = 0 + temp[0] * axis[2] - s * axis[1];
+
+		Rotate[1][0] = 0 + temp[1] * axis[0] - s * axis[2];
+		Rotate[1][1] = c + temp[1] * axis[1];
+		Rotate[1][2] = 0 + temp[1] * axis[2] + s * axis[0];
+
+		Rotate[2][0] = 0 + temp[2] * axis[0] + s * axis[1];
+		Rotate[2][1] = 0 + temp[2] * axis[1] - s * axis[0];
+		Rotate[2][2] = c + temp[2] * axis[2];
+
+		tmat4x4<T, P> Result(uninitialize);
+		Result[0] = m[0] * Rotate[0][0] + m[1] * Rotate[0][1] + m[2] * Rotate[0][2];
+		Result[1] = m[0] * Rotate[1][0] + m[1] * Rotate[1][1] + m[2] * Rotate[1][2];
+		Result[2] = m[0] * Rotate[2][0] + m[1] * Rotate[2][1] + m[2] * Rotate[2][2];
+		Result[3] = m[3];
+		return Result;
 	}
 
 	template <typename T, precision P>
